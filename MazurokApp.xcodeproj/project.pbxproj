@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EDE9477C2F3A0019002D6211 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EDE9477B2F3A0019002D6211 /* SDWebImage */; };
+		EDE9477E2F3A0019002D6211 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EDE9477D2F3A0019002D6211 /* SDWebImageMapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EDF17B5E2F3685A400C858C2 /* MazurokApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazurokApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDE9477E2F3A0019002D6211 /* SDWebImageMapKit in Frameworks */,
+				EDE9477C2F3A0019002D6211 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = MazurokApp;
 			packageProductDependencies = (
+				EDE9477B2F3A0019002D6211 /* SDWebImage */,
+				EDE9477D2F3A0019002D6211 /* SDWebImageMapKit */,
 			);
 			productName = MazurokApp;
 			productReference = EDF17B5E2F3685A400C858C2 /* MazurokApp.app */;
@@ -107,6 +116,9 @@
 			);
 			mainGroup = EDF17B552F3685A400C858C2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EDE9477A2F3A0019002D6211 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EDF17B5F2F3685A400C858C2 /* Products */;
 			projectDirPath = "";
@@ -161,12 +173,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ua.edu.ukma.mazurok.MazurokApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -193,12 +209,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ua.edu.ukma.mazurok.MazurokApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -345,6 +365,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EDE9477A2F3A0019002D6211 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EDE9477B2F3A0019002D6211 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDE9477A2F3A0019002D6211 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		EDE9477D2F3A0019002D6211 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDE9477A2F3A0019002D6211 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EDF17B562F3685A400C858C2 /* Project object */;
 }
