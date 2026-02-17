@@ -1,40 +1,53 @@
 //
-//  PostViewController.swift
+//  PostTableViewCell.swift
 //  MazurokApp
 //
-//  Created by Andrii Mazurok on 06.02.2026.
+//  Created by Andrii Mazurok on 15.02.2026.
 //
 
 import UIKit
 import SDWebImage
 
-class PostViewController: UIViewController {
-    @IBOutlet private weak var postView: UIView!
-    
+class PostTableViewCell: UITableViewCell {
     @IBOutlet private weak var usernameLabel: UILabel!
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var domainLabel: UILabel!
     @IBOutlet private weak var bookmarkButton: UIButton!
     
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var image: UIImageView!
+    @IBOutlet private weak var postImage: UIImageView!
     
     @IBOutlet private weak var ratingLabel: UILabel!
     @IBOutlet private weak var commentsLabel: UILabel!
     @IBOutlet private weak var shareButton: UIButton!
     
-    private var post: Post!
-    
     private var saved: Bool = Bool.random()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func configure(with post: Post) {
+        usernameLabel.text = post.username
+        domainLabel.text = post.domain
+        timeLabel.text = calculateTimePassed(from: post.created_at)
+        titleLabel.text = post.title
+        commentsLabel.text = "\(post.comments.count)"
+        ratingLabel.text = "\(post.ups + post.downs)"
+        updateBookmarkButton()
         
-        setupPostView()
+        if let imageUrl = URL(string: post.image_url) {
+            postImage.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
+        }
     }
     
-    func setPost(_ post: Post) {
-        self.post = post
+    private func updateBookmarkButton() {
+        let image = UIImage(systemName: saved ? "bookmark.fill" : "bookmark")
+        bookmarkButton.setImage(image, for: .normal)
+    }
+    
+    private func calculateTimePassed(from date: Date) -> String {
+        let now = Date()
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .short
+        
+        return formatter.localizedString(for: date, relativeTo: now)
     }
     
     @IBAction private func bookmarkButtonTapped() {
@@ -44,33 +57,5 @@ class PostViewController: UIViewController {
     
     @IBAction private func sharedButtonTapped() {
         print("Share button tapped")
-    }
-    
-    private func setupPostView() {
-        usernameLabel.text = post.username
-        domainLabel.text = post.domain
-        titleLabel.text = post.title
-        commentsLabel.text = "\(post.comments.count)"
-        ratingLabel.text = "\(post.ups + post.downs)"
-        timeLabel.text = calculateTimePassed(from: post.created_at)
-        postView.isHidden = false
-        updateBookmarkButton()
-        
-        if let imageUrl = URL(string: post.image_url) {
-            image.sd_setImage(with: imageUrl)
-        }
-    }
-    
-    private func updateBookmarkButton() {
-        let image = UIImage(systemName: saved ? "bookmark.fill" : "bookmark")
-        bookmarkButton.setImage(image, for: .normal)
-    }
-
-    private func calculateTimePassed(from date: Date) -> String {
-        let now = Date()
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .short
-        
-        return formatter.localizedString(for: date, relativeTo: now)
     }
 }

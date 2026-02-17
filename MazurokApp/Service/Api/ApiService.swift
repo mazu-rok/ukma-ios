@@ -14,8 +14,12 @@ final class ApiService {
     
     private let baseUrl = "http://localhost:8080"
     
-    func getPosts(limit: Int, after: Int = 0) async throws -> [Post] {
-        let url = URL(string: "\(baseUrl)/posts?limit=\(limit)&after=\(after)")!
+    func getPosts(limit: Int, after: String?) async throws -> [Post] {
+        var stringUrl = "\(baseUrl)/posts?limit=\(limit)"
+        if let after  {
+            stringUrl += "&after=\(after)"
+        }
+        let url = URL(string: stringUrl)!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
