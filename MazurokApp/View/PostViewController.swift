@@ -25,7 +25,10 @@ class PostViewController: UIViewController {
     
     private var post: Post!
     
-    private var saved: Bool = Bool.random()
+    private var saved: Bool!
+    
+    private var onShareButtonTapped: (() -> Void)!
+    private var onSaveButtonTapped: ((Bool) -> Void)!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,17 +36,20 @@ class PostViewController: UIViewController {
         setupPostView()
     }
     
-    func setPost(_ post: Post) {
+    func setPost(_ post: Post, onShareButtonTapped: @escaping () -> Void, onSaveButtonTapped: @escaping (Bool) -> Void) {
         self.post = post
+        self.onShareButtonTapped = onShareButtonTapped
+        self.onSaveButtonTapped = onSaveButtonTapped
     }
     
     @IBAction private func bookmarkButtonTapped() {
         saved.toggle()
         updateBookmarkButton()
+        onSaveButtonTapped(saved)
     }
     
     @IBAction private func sharedButtonTapped() {
-        print("Share button tapped")
+        onShareButtonTapped()
     }
     
     private func setupPostView() {
@@ -53,6 +59,7 @@ class PostViewController: UIViewController {
         commentsLabel.text = "\(post.comments.count)"
         ratingLabel.text = "\(post.ups + post.downs)"
         timeLabel.text = calculateTimePassed(from: post.created_at)
+        saved = post.saved ?? false
         postView.isHidden = false
         updateBookmarkButton()
         
@@ -66,7 +73,9 @@ class PostViewController: UIViewController {
         bookmarkButton.setImage(image, for: .normal)
     }
 
-    private func calculateTimePassed(from date: Date) -> String {
+    private func calculateTimePassed(from timestamp: Double) -> String {
+        let date = Date(timeIntervalSince1970: timestamp)
+        
         let now = Date()
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .short

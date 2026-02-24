@@ -21,15 +21,21 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet private weak var commentsLabel: UILabel!
     @IBOutlet private weak var shareButton: UIButton!
     
-    private var saved: Bool = Bool.random()
+    private var onShareButtonTapped: (() -> Void)!
+    private var onSaveButtonTapped: ((Bool) -> Void)!
     
-    func configure(with post: Post) {
+    private var saved: Bool!
+    
+    func configure(with post: Post, onShareButtonTapped: @escaping () -> Void, onSaveButtonTapped: @escaping (Bool) -> Void) {
         usernameLabel.text = post.username
         domainLabel.text = post.domain
         timeLabel.text = calculateTimePassed(from: post.created_at)
         titleLabel.text = post.title
         commentsLabel.text = "\(post.comments.count)"
         ratingLabel.text = "\(post.ups + post.downs)"
+        saved = post.saved ?? false
+        self.onShareButtonTapped = onShareButtonTapped
+        self.onSaveButtonTapped = onSaveButtonTapped
         updateBookmarkButton()
         
         if let imageUrl = URL(string: post.image_url) {
@@ -42,7 +48,9 @@ class PostTableViewCell: UITableViewCell {
         bookmarkButton.setImage(image, for: .normal)
     }
     
-    private func calculateTimePassed(from date: Date) -> String {
+    private func calculateTimePassed(from timestamp: Double) -> String {
+        let date = Date(timeIntervalSince1970: timestamp)
+        
         let now = Date()
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .short
@@ -53,9 +61,10 @@ class PostTableViewCell: UITableViewCell {
     @IBAction private func bookmarkButtonTapped() {
         saved.toggle()
         updateBookmarkButton()
+        onSaveButtonTapped(saved)
     }
     
     @IBAction private func sharedButtonTapped() {
-        print("Share button tapped")
+        onShareButtonTapped()
     }
 }

@@ -233,7 +233,7 @@
             </objects>
             <point key="canvasLocation" x="-416" y="-485"/>
         </scene>
-        <!--label-->
+        <!--Domain-->
         <scene sceneID="EdC-VJ-PhL">
             <objects>
                 <viewController id="vRH-VC-Qlb" customClass="PostListViewController" customModule="MazurokApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -241,6 +241,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Vfv-gc-t27">
+                                <rect key="frame" x="0.0" y="178" width="440" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="lKT-Ww-O1r"/>
+                                </constraints>
+                                <color key="barTintColor" systemColor="systemGroupedBackgroundColor"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0c2-Bl-wrz">
                                 <rect key="frame" x="0.0" y="178" width="440" height="778"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -472,21 +480,29 @@
                         <viewLayoutGuide key="safeArea" id="N3I-MJ-FQc"/>
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Vfv-gc-t27" firstAttribute="leading" secondItem="N3I-MJ-FQc" secondAttribute="leading" id="29w-ng-Jfw"/>
+                            <constraint firstItem="Vfv-gc-t27" firstAttribute="top" secondItem="N3I-MJ-FQc" secondAttribute="top" id="JSL-PM-YrW"/>
                             <constraint firstItem="N3I-MJ-FQc" firstAttribute="trailing" secondItem="0c2-Bl-wrz" secondAttribute="trailing" id="Nre-Ne-15N"/>
-                            <constraint firstItem="0c2-Bl-wrz" firstAttribute="top" secondItem="N3I-MJ-FQc" secondAttribute="top" id="Zyi-Pn-avR"/>
+                            <constraint firstItem="0c2-Bl-wrz" firstAttribute="top" secondItem="Vfv-gc-t27" secondAttribute="bottom" id="YIh-DB-Wc8"/>
+                            <constraint firstAttribute="trailing" secondItem="Vfv-gc-t27" secondAttribute="trailing" id="bR5-7u-DMX"/>
                             <constraint firstAttribute="bottom" secondItem="0c2-Bl-wrz" secondAttribute="bottom" id="lvX-ul-574"/>
                             <constraint firstItem="0c2-Bl-wrz" firstAttribute="leading" secondItem="N3I-MJ-FQc" secondAttribute="leading" id="nch-ep-Cuu"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="label" id="agr-qM-FRx">
+                    <navigationItem key="navigationItem" title="Domain" id="agr-qM-FRx">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="CtS-Kl-O9o">
                             <imageReference key="image" image="bookmark" catalog="system" symbolScale="medium"/>
                             <color key="tintColor" name="AccentColor"/>
+                            <connections>
+                                <action selector="showSavedPostsButtonTapped:" destination="vRH-VC-Qlb" id="Oo0-Mm-kBC"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="postsTableView" destination="0c2-Bl-wrz" id="O6z-ax-e9r"/>
                         <outlet property="savedPostsButton" destination="CtS-Kl-O9o" id="TU1-Uh-RUS"/>
+                        <outlet property="searchBar" destination="Vfv-gc-t27" id="azz-mI-m09"/>
+                        <outlet property="searchBarHeight" destination="lKT-Ww-O1r" id="pVs-zS-3Ky"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="presentPost" id="nU3-sd-7H0"/>
                     </connections>
                 </viewController>
@@ -520,7 +536,7 @@
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -529,10 +545,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.53333333333333333" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
