@@ -93,7 +93,9 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
             } else {
                 self.savedPosts.remove(at: self.savedPosts.firstIndex(of: post)!)
             }
-            self.postsTableView.reloadData()
+            if self.savedPostsDisplayingMode && !saved {
+                self.postsTableView.reloadData()
+            }
             StorageManager.sharedInstance.savePosts(self.savedPosts)
         })
 
@@ -125,7 +127,9 @@ class PostListViewController: UIViewController, UITableViewDelegate, UITableView
                     } else {
                         self.savedPosts.remove(at: self.savedPosts.firstIndex(of: post)!)
                     }
-                    self.postsTableView.reloadData()
+                    if self.savedPostsDisplayingMode && !saved {
+                        self.postsTableView.reloadData()
+                    }
                     StorageManager.sharedInstance.savePosts(self.savedPosts)
                 })
             }

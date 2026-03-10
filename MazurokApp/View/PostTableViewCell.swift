@@ -16,6 +16,7 @@ class PostTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var postImage: UIImageView!
+    private var bookmarkLayer: CAShapeLayer!
     
     @IBOutlet private weak var ratingLabel: UILabel!
     @IBOutlet private weak var commentsLabel: UILabel!
@@ -26,6 +27,25 @@ class PostTableViewCell: UITableViewCell {
     
     private var saved: Bool!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        postImage.isUserInteractionEnabled = true
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap))
+        doubleTap.numberOfTapsRequired = 2
+        
+        doubleTap.cancelsTouchesInView = true
+        doubleTap.delaysTouchesBegan = true
+        postImage.addGestureRecognizer(doubleTap)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        bookmarkLayer?.position = CGPoint(x: postImage.bounds.midX,
+                                          y: postImage.bounds.midY)
+    }
+
     func configure(with post: Post, onShareButtonTapped: @escaping () -> Void, onSaveButtonTapped: @escaping (Bool) -> Void) {
         usernameLabel.text = post.username
         domainLabel.text = post.domain
@@ -41,6 +61,7 @@ class PostTableViewCell: UITableViewCell {
         if let imageUrl = URL(string: post.image_url) {
             postImage.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
         }
+        bookmarkLayer = createBookmarkLayer(in: postImage)
     }
     
     private func updateBookmarkButton() {
@@ -66,5 +87,47 @@ class PostTableViewCell: UITableViewCell {
     
     @IBAction private func sharedButtonTapped() {
         onShareButtonTapped()
+    }
+
+    @objc func handleDoubleTap() {
+        bookmarkButtonTapped()
+        bookmarkLayer.fillColor = saved ? UIColor.white.withAlphaComponent(0.8).cgColor : UIColor.clear.cgColor
+        animateBookmarkIcon()
+    }
+
+    private func createBookmarkLayer(in view: UIView) -> CAShapeLayer {
+        let width: CGFloat = 60
+        let height: CGFloat = 80
+        
+        let path = UIBezierPath()
+        
+        path.move(to: CGPoint(x: 0, y: 0))
+        path.addLine(to: CGPoint(x: width, y: 0))
+        path.addLine(to: CGPoint(x: width, y: height))
+        path.addLine(to: CGPoint(x: width / 2, y: height * 0.75))
+        path.addLine(to: CGPoint(x: 0, y: height))
+        path.close()
+        
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = UIColor.white.withAlphaComponent(0.8).cgColor
+        shapeLayer.lineWidth = 2
+        shapeLayer.opacity = 0
+        shapeLayer.bounds = CGRect(x: 0, y: 0, width: width, height: height)
+        
+        view.layer.addSublayer(shapeLayer)
+
+        return shapeLayer
+    }
+
+    private func animateBookmarkIcon() {
+        let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
+        opacityAnimation.values = [0, 1, 1, 0]
+        opacityAnimation.keyTimes = [0, 0.4, 0.8, 1]
+        opacityAnimation.duration = 0.75
+        opacityAnimation.isRemovedOnCompletion = true
+        
+        bookmarkLayer.add(opacityAnimation, forKey: "bookmarkIconAnimation")
     }
 }
